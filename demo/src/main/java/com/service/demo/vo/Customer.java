@@ -2,23 +2,25 @@ package com.service.demo.vo;
 
 public class Customer {
 
-    private String firstName;
+private String FirstName;
+private String LastName;
+private int Vehicles;
+private String Address;
+private int RegistrationID;
+private int ContactNo;
+private int Bookings;
 
-    private String lastName;
-
-    public String getFirstName() {
-        return firstName;
+    public Customer(String firstName, String lastName, int vehicles, String address, int registrationID, int contactNo, int bookings) {
+        FirstName = firstName;
+        LastName = lastName;
+        Vehicles = vehicles;
+        Address = address;
+        RegistrationID = registrationID;
+        ContactNo = contactNo;
+        Bookings = bookings;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 
-    public String getLastName() {
-        return lastName;
-    }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+
 }
