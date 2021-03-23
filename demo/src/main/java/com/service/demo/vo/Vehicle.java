@@ -1,30 +1,53 @@
 package com.service.demo.vo;
 
-public class Vehicle {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
+
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+public abstract class Vehicle {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String model;
     private String modelID;
     private String type;
     private String variant;
-    private String owner;
     private String power;
     private String weight;
     private int services;
     private int serviceCost;
     private int registrationNo;
     private boolean insurance;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Customer owner;
+    @OneToMany
+    private List<Booking> bookings;
 
-    public Vehicle(String model, String modelID, String type, String variant, String owner, String power, String weight, int services, int serviceCost, int registrationNo, boolean insurance) {
+    public Vehicle() {
+    }
+
+    public Vehicle(String model, String modelID, String type, String variant, String power, String weight, int services, int serviceCost, int registrationNo, Customer owner, boolean insurance) {
         this.model = model;
         this.modelID = modelID;
         this.type = type;
         this.variant = variant;
-        this.owner = owner;
         this.power = power;
         this.weight = weight;
         this.services = services;
         this.serviceCost = serviceCost;
         this.registrationNo = registrationNo;
+        this.owner = owner;
         this.insurance = insurance;
     }
 
@@ -58,14 +81,6 @@ public class Vehicle {
 
     public void setVariant(String variant) {
         this.variant = variant;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 
     public String getPower() {
@@ -114,5 +129,46 @@ public class Vehicle {
 
     public void setInsurance(boolean insurance) {
         this.insurance = insurance;
+    }
+
+    public Customer getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Customer owner) {
+        this.owner = owner;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return  "id='" + id + '\'' +
+                "model='" + model + '\'' +
+                ", modelID='" + modelID + '\'' +
+                ", type='" + type + '\'' +
+                ", variant='" + variant + '\'' +
+                ", power='" + power + '\'' +
+                ", weight='" + weight + '\'' +
+                ", services=" + services +
+                ", serviceCost=" + serviceCost +
+                ", registrationNo=" + registrationNo +
+                ", insurance=" + insurance +
+                ", owner=" + owner +
+                ", bookings=" + bookings;
     }
 }

@@ -1,19 +1,32 @@
 package com.service.demo.vo;
 
+import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
+
+@Entity
 public class Customer {
 
-private String firstName;
-private String lastName;
-private int vehicles;
-private String address;
-private int registrationID;
-private int contactNo;
-private int bookings;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String firstName;
+    private String lastName;
+    @OneToMany
+    private List<Car> cars;
+    @OneToMany
+    private List<Bike> bikes;
+    private String address;
+    private int registrationID;
+    private int contactNo;
+    @OneToMany
+    private List<Booking> bookings;
 
-    public Customer(String firstName, String lastName, int vehicles, String address, int registrationID, int contactNo, int bookings) {
+    public Customer(String firstName, String lastName, List<Car> cars, List<Bike> bikes,  String address, int registrationID, int contactNo, List<Booking> bookings) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.vehicles = vehicles;
+        this.cars = cars;
+        this.bikes = bikes;
         this.address = address;
         this.registrationID = registrationID;
         this.contactNo = contactNo;
@@ -36,12 +49,20 @@ private int bookings;
         this.lastName = lastName;
     }
 
-    public int getVehicles() {
-        return vehicles;
+    public List<Car> getCars() {
+        return cars;
     }
 
-    public void setVehicles(int vehicles) {
-        this.vehicles = vehicles;
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
+    public List<Bike> getBikes() {
+        return bikes;
+    }
+
+    public void setBikes(List<Bike> bikes) {
+        this.bikes = bikes;
     }
 
     public String getAddress() {
@@ -68,11 +89,32 @@ private int bookings;
         this.contactNo = contactNo;
     }
 
-    public int getBookings() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Booking> getBookings() {
         return bookings;
     }
 
-    public void setBookings(int bookings) {
+    public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return id.equals(customer.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -1,17 +1,26 @@
 package com.service.demo.vo;
 
-public class Car  {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
+
+@Entity
+@DiscriminatorValue(value="car")
+public class Car  extends Vehicle{
+
 
     private String transmission;
     private int seats;
     private int doors;
+
 
     public Car(String transmission, int seats, int doors) {
         this.transmission = transmission;
         this.seats = seats;
         this.doors = doors;
     }
-
 
     public String getTransmission() {
         return transmission;
@@ -35,5 +44,14 @@ public class Car  {
 
     public void setDoors(int doors) {
         this.doors = doors;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +super.toString()+
+                "transmission='" + transmission + '\'' +
+                ", seats=" + seats +
+                ", doors=" + doors +
+                '}';
     }
 }

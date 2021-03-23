@@ -1,2 +1,7 @@
-package com.service.demo.repositories;public interface TimeSlotRepository {
+package com.service.demo.repositories;
+
+import com.service.demo.vo.TimeSlot;
+import org.springframework.data.repository.CrudRepository;
+
+public interface TimeSlotRepository extends CrudRepository<TimeSlot, Long> {
 }

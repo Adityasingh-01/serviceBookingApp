@@ -1,6 +1,14 @@
 package com.service.demo.vo;
 
-public class Bike {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
+
+@Entity
+@DiscriminatorValue(value = "bike")
+public class Bike extends Vehicle{
 
     private String type;
     private String startType;
@@ -45,5 +53,15 @@ public class Bike {
 
     public void setBraking(String braking) {
         this.braking = braking;
+    }
+
+    @Override
+    public String toString() {
+        return "Bike{" +super.toString()+
+                "type='" + type + '\'' +
+                ", startType='" + startType + '\'' +
+                ", suspension='" + suspension + '\'' +
+                ", braking='" + braking + '\'' +
+                '}';
     }
 }
