@@ -17,18 +17,18 @@ public class Customer {
     @OneToMany
     private List<Bike> bikes;
     private String address;
-    private int registrationID;
+    private String emailId;
     private int contactNo;
     @OneToMany
     private List<Booking> bookings;
 
-    public Customer(String firstName, String lastName, List<Car> cars, List<Bike> bikes,  String address, int registrationID, int contactNo, List<Booking> bookings) {
+    public Customer(String firstName, String lastName, List<Car> cars, List<Bike> bikes,  String address, String emailId, int contactNo, List<Booking> bookings) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.cars = cars;
         this.bikes = bikes;
         this.address = address;
-        this.registrationID = registrationID;
+        this.emailId = emailId;
         this.contactNo = contactNo;
         this.bookings = bookings;
     }
@@ -73,12 +73,12 @@ public class Customer {
         this.address = address;
     }
 
-    public int getRegistrationID() {
-        return registrationID;
+    public String getEmailId() {
+        return emailId;
     }
 
-    public void setRegistrationID(int registrationID) {
-        this.registrationID = registrationID;
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
 
     public int getContactNo() {

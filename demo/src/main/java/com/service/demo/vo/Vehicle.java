@@ -17,13 +17,11 @@ public abstract class Vehicle {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String model;
-    private String modelID;
     private String type;
     private String variant;
     private String power;
     private String weight;
     private int services;
-    private int serviceCost;
     private int registrationNo;
     private boolean insurance;
     @ManyToOne
@@ -37,15 +35,13 @@ public abstract class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(String model, String modelID, String type, String variant, String power, String weight, int services, int serviceCost, int registrationNo, Customer owner, boolean insurance) {
+    public Vehicle(String model, String type, String variant, String power, String weight, int services, int registrationNo, Customer owner, boolean insurance) {
         this.model = model;
-        this.modelID = modelID;
         this.type = type;
         this.variant = variant;
         this.power = power;
         this.weight = weight;
         this.services = services;
-        this.serviceCost = serviceCost;
         this.registrationNo = registrationNo;
         this.owner = owner;
         this.insurance = insurance;
@@ -57,14 +53,6 @@ public abstract class Vehicle {
 
     public void setModel(String model) {
         this.model = model;
-    }
-
-    public String getModelID() {
-        return modelID;
-    }
-
-    public void setModelID(String modelID) {
-        this.modelID = modelID;
     }
 
     public String getType() {
@@ -105,14 +93,6 @@ public abstract class Vehicle {
 
     public void setServices(int services) {
         this.services = services;
-    }
-
-    public int getServiceCost() {
-        return serviceCost;
-    }
-
-    public void setServiceCost(int serviceCost) {
-        this.serviceCost = serviceCost;
     }
 
     public int getRegistrationNo() {
@@ -159,13 +139,11 @@ public abstract class Vehicle {
     public String toString() {
         return  "id='" + id + '\'' +
                 "model='" + model + '\'' +
-                ", modelID='" + modelID + '\'' +
                 ", type='" + type + '\'' +
                 ", variant='" + variant + '\'' +
                 ", power='" + power + '\'' +
                 ", weight='" + weight + '\'' +
                 ", services=" + services +
-                ", serviceCost=" + serviceCost +
                 ", registrationNo=" + registrationNo +
                 ", insurance=" + insurance +
                 ", owner=" + owner +
