@@ -52,7 +52,7 @@
             <div>
                 <div class="full">
                     <div class="contact_form">
-                        <form>
+                        <form th:action="@{/handleAddCar}">
                             <fieldset class="row">
                                 <div class="col-md-12">
                                     <div class="full field">
@@ -66,26 +66,6 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="full field">
-                                        <input type="text" placeholder="Type" name="type" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="full field">
-                                        <input type="text" placeholder="Power in BHP" name="power" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="full field">
-                                        <input type="text" placeholder="Weight" name="weight" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="full field">
-                                        <input type="text" placeholder="Service No" name="services" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="full field">
                                         <input type="text" placeholder="Registration No" name="registrationNo" />
                                     </div>
                                 </div>
@@ -95,19 +75,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="full field">
-                                        <input type="text" placeholder="Seater" name="seats" />
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="full field">
-                                        <input type="text" placeholder="Doors" name="doors" />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
                                     <div class="full center">
-                                        <button class="submit_bt">Send</button>
+                                        <button class="submit_bt">Submit</button>
                                     </div>
                                 </div>
                             </fieldset>

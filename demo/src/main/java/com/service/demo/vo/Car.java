@@ -15,6 +15,8 @@ public class Car  extends Vehicle{
     private int seats;
     private int doors;
 
+    public Car() {
+    }
 
     public Car(String transmission, int seats, int doors) {
         this.transmission = transmission;

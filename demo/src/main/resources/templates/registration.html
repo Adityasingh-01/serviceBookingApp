@@ -52,7 +52,7 @@
             <div>
                 <div class="full">
                     <div class="contact_form">
-                        <form>
+                        <form th:action="@{/handleRegistration}">
                             <fieldset class="row">
                                 <div class="col-md-12">
                                     <div class="full field">
@@ -71,17 +71,23 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="full field">
+                                        <input type="password" placeholder="Password" name="password" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="full field">
                                         <input type="text" placeholder="Phone" name="number" />
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="full field">
-                                        <textarea placeholder="Address"></textarea>
+                                        <textarea placeholder="Address" name="address"></textarea>
                                     </div>
                                 </div>
+
                                 <div class="col-md-12">
                                     <div class="full center">
-                                        <button class="submit_bt">Send</button>
+                                        <button class="submit_bt">Submit</button>
                                     </div>
                                 </div>
                             </fieldset>

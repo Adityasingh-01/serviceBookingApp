@@ -15,6 +15,9 @@ public class Bike extends Vehicle{
     private String suspension;
     private String braking;
 
+    public Bike() {
+    }
+
     public Bike(String type, String startType, String suspension, String braking) {
         this.type = type;
         this.startType = startType;
