@@ -56,14 +56,19 @@
                 <div th:unless="${errorCode == '01'}" class="full slider_cont_section">
                     <h4>Welcome <span th:text="${customer.firstName}"/></h4>
                     <p>A one stop shop for all your vehicle servicing needs.</p>
-                    <div class="button_section">
+                    <div class="button_section" style="margin-bottom:20px">
                         <a th:href="@{/addCar}">Add Car</a>
                         <a th:href="@{/addBike}">Add Bike</a>
                         <a th:href="@{/bookService}">Book A Service</a>
+                    </div>
+                </div>
+                <div th:unless="${errorCode == '01'}" class="full slider_cont_section">
+                    <div class="button_section margin_top_30" >
                         <a th:href="@{/home}">Home</a>
                         <a th:href="@{/logOut}">Log Out</a>
                     </div>
                 </div>
+
             </div>
             <div class="col-md-5">
                 <div id="slider_main" class="carousel slide" data-ride="carousel">
@@ -81,7 +86,48 @@
             </div>
         </div>
     </div>
+
+    <div th:unless="${noVehicle == 'true'}" class="container margin_top_30">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="full">
+                    <h3 style="color:#f36b2a">Here are your Vehicles</h3>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="full" style="color:#f36b2c">
+                    <table border="1" width="800">
+                        <th style="text-align: center; vertical-align: middle;">
+                            Nick Name
+                        </th>
+                        <th style="text-align: center; vertical-align: middle;">
+                            Manufacturer
+                        </th>
+                        <th style="text-align: center; vertical-align: middle;">
+                            Model Name
+                        </th>
+                        <th style="text-align: center; vertical-align: middle;">
+                            Registration
+                        </th>
+                        <tr th:each="car : ${customer.cars}">
+                            <td th:text="${car.nickName}" style="text-align: center; vertical-align: middle;">Nick Name</td>
+                            <td  th:text="${car.manufacturer}" style="text-align: center; vertical-align: middle;">Manufacturer</td>
+                            <td  th:text="${car.modelName}" style="text-align: center; vertical-align: middle;">Madel Name</td>
+                            <td  th:text="${car.registrationNo}" style="text-align: center; vertical-align: middle;">Registration</td>
+                        </tr>
+                        <tr th:each="car : ${customer.bikes}">
+                            <td th:text="${car.nickName}" style="text-align: center; vertical-align: middle;">Nick Name</td>
+                            <td  th:text="${car.manufacturer}" style="text-align: center; vertical-align: middle;">Manufacturer</td>
+                            <td  th:text="${car.modelName}" style="text-align: center; vertical-align: middle;">Madel Name</td>
+                            <td  th:text="${car.registrationNo}" style="text-align: center; vertical-align: middle;">Registration</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+
 
 
 <div class="overlay"></div>

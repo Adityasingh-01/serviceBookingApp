@@ -69,6 +69,7 @@ public class ServiceController {
         addCookieToResponse("bs_email", "", response);
         model.addAttribute("errorMessage", "You need to login or register");
         model.addAttribute("errorCode", "01");
+        model.addAttribute("noVehicle", "true");
 
         return "welcome"; //view
     }
@@ -87,6 +88,9 @@ public class ServiceController {
             Customer customer = new Customer(firstName, lastName, null, null, address, email, phoneNumberStr, null);
             customer.setPassword(password);
             model.addAttribute("customer", customer);
+            if(customer.getCars() == null || customer.getCars().isEmpty()) {
+                model.addAttribute("noVehicle", "true");
+            }
             customerRepository.save(customer);
             addCookieToResponse("bs_email", email, response);
             return "welcome"; //view
@@ -107,8 +111,12 @@ public class ServiceController {
             if(customer == null) {
                 model.addAttribute("errorMessage", "Please provide a valid email/password");
                 model.addAttribute("errorCode", "01");
+                model.addAttribute("noVehicle", "true");
             } else if(customer.getPassword().equals(password)) {
                 model.addAttribute("customer", customer);
+                if(customer.getCars() == null || customer.getCars().isEmpty()) {
+                    model.addAttribute("noVehicle", "true");
+                }
             } else {
 
             }
@@ -132,6 +140,9 @@ public class ServiceController {
                 model.addAttribute("errorCode", "01");
             } else {
                 model.addAttribute("customer", customer);
+                if(customer.getCars() == null || customer.getCars().isEmpty()) {
+                    model.addAttribute("noVehicle", "true");
+                }
             }
         }
 
@@ -187,40 +198,29 @@ public class ServiceController {
         } else {
             Customer customer = getCustomerByEmail(email);
             if(customer != null) {
-                String thisModel = request.getParameter("model");
-                String variant = request.getParameter("variant");
-                String type = request.getParameter("variant");
-                String power = request.getParameter("power");
-                String weight = request.getParameter("weight");
-                String services = request.getParameter("services");
-                int servicesInt = Integer.parseInt(services);
+                String manufacturer = request.getParameter("manufacturer");
+                String modelName = request.getParameter("modelName");
+                String nickName = request.getParameter("nickName");
                 String registrationNo = request.getParameter("registrationNo");
-                int registrationNOInt = Integer.parseInt(registrationNo);
                 String insurance = request.getParameter("insurance");
                 boolean isInsurance = Boolean.parseBoolean(insurance);
-                String seats = request.getParameter("seats");
-                int seatsInt = Integer.parseInt(seats);
-                String doors = request.getParameter("doors");
-                int doorsInt = Integer.parseInt(doors);
                 if (registrationNo != null) {
                     Car car = new Car();
-                    car.setVariant(variant);
-                    car.setModel(thisModel);
-                    car.setType(type);
-                    car.setPower(power);
-                    car.setWeight(weight);
-                    car.setServices(servicesInt);
-                    car.setRegistrationNo(registrationNOInt);
+                    car.setManufacturer(manufacturer);
+                    car.setModelName(modelName);
+                    car.setNickName(nickName);
+                    car.setRegistrationNo(registrationNo);
                     car.setInsurance(isInsurance);
-                    car.setDoors(doorsInt);
+                    car.setOwner(customer);
                     List<Car> cars = customer.getCars();
                     if (cars == null) {
                         cars = new ArrayList<>();
-                        cars.add(car);
-                        customer.setCars(cars);
-                        vehicleRepository.save(car);
-                        customerRepository.save(customer);
                     }
+                    cars.add(car);
+                    customer.setCars(cars);
+                    vehicleRepository.save(car);
+                    customerRepository.save(customer);
+                    model.addAttribute("customer", customer);
                 }
             } else {
                 model.addAttribute("errorCode", "01");
@@ -240,44 +240,30 @@ public class ServiceController {
         else {
             Customer customer = getCustomerByEmail(email);
             if (customer != null) {
-
-                String bikeModel = request.getParameter("model");
-                String variant = request.getParameter("variant");
-                String type = request.getParameter("type");
-                String power = request.getParameter("power");
-                String weight = request.getParameter("weight");
-                String serviceNo = request.getParameter("serviceNo");
-                int serviceNoInt = Integer.parseInt(serviceNo);
+                String modelName = request.getParameter("modelName");
+                String nickName = request.getParameter("nickName");
+                String manufacturer = request.getParameter("manufacturer");
                 String registrationNo = request.getParameter("registrationNo");
-                int registrationNoInt = Integer.parseInt(registrationNo);
                 String insurance = request.getParameter("insurance");
                 boolean isInsurance = Boolean.parseBoolean(insurance);
-                String superBike = request.getParameter("type");
-                String suspension = request.getParameter("suspension");
-                String braking = request.getParameter("braking");
 
 
                 if (registrationNo != null) {
                     Bike bike = new Bike();
-                    bike.setModel(bikeModel);
-                    bike.setVariant(variant);
-                    bike.setType(type);
-                    bike.setPower(power);
-                    bike.setWeight(weight);
-                    bike.setServices(serviceNoInt);
-                    bike.setRegistrationNo(registrationNoInt);
+                    bike.setModelName(modelName);
+                    bike.setNickName(nickName);
+                    bike.setManufacturer(manufacturer);
                     bike.setInsurance(isInsurance);
-                    bike.setType(superBike);
-                    bike.setSuspension(suspension);
-                    bike.setBraking(braking);
+                    bike.setOwner(customer);
                     List<Bike> bikes = customer.getBikes();
                     if (bikes == null) {
                         bikes = new ArrayList<>();
-                        bikes.add(bike);
-                        customer.setBikes(bikes);
-                        vehicleRepository.save(bike);
-                        customerRepository.save(customer);
                     }
+                    bikes.add(bike);
+                    customer.setBikes(bikes);
+                    vehicleRepository.save(bike);
+                    customerRepository.save(customer);
+                    model.addAttribute("customer", customer);
                 }
             }
             else {

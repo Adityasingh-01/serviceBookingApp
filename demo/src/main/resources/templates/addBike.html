@@ -52,16 +52,21 @@
             <div>
                 <div class="full">
                     <div class="contact_form">
-                        <form>
+                        <form th:action="@{/handleAddBike}">
                             <fieldset class="row">
                                 <div class="col-md-12">
                                     <div class="full field">
-                                        <input type="text" placeholder="Model" name="model" />
+                                        <input type="text" placeholder="Choose a Nick Name for your bike" name="nickName" />
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="full field">
-                                        <input type="text" placeholder="Variant" name="variant" />
+                                        <input type="text" placeholder="Manufacturer" name="manufacturer" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="full field">
+                                        <input type="text" placeholder="Model Name" name="modelName" />
                                     </div>
                                 </div>
                                 <div class="col-md-12">

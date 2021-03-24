@@ -16,13 +16,14 @@ public abstract class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String model;
+    private String manufacturer;
+    private String modelName;
+    private String nickName;
     private String type;
-    private String variant;
     private String power;
     private String weight;
     private int services;
-    private int registrationNo;
+    private String registrationNo;
     private boolean insurance;
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
@@ -35,10 +36,11 @@ public abstract class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(String model, String type, String variant, String power, String weight, int services, int registrationNo, Customer owner, boolean insurance) {
-        this.model = model;
+    public Vehicle(String manufacturer, String modelName, String nickName, String power, String weight, int services, String registrationNo, Customer owner, boolean insurance) {
+        this.manufacturer = manufacturer;
         this.type = type;
-        this.variant = variant;
+        this.modelName = modelName;
+        this.nickName = nickName;
         this.power = power;
         this.weight = weight;
         this.services = services;
@@ -47,12 +49,28 @@ public abstract class Vehicle {
         this.insurance = insurance;
     }
 
-    public String getModel() {
-        return model;
+    public String getManufacturer() {
+        return manufacturer;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getType() {
@@ -61,14 +79,6 @@ public abstract class Vehicle {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getVariant() {
-        return variant;
-    }
-
-    public void setVariant(String variant) {
-        this.variant = variant;
     }
 
     public String getPower() {
@@ -95,11 +105,11 @@ public abstract class Vehicle {
         this.services = services;
     }
 
-    public int getRegistrationNo() {
+    public String getRegistrationNo() {
         return registrationNo;
     }
 
-    public void setRegistrationNo(int registrationNo) {
+    public void setRegistrationNo(String registrationNo) {
         this.registrationNo = registrationNo;
     }
 
@@ -138,9 +148,10 @@ public abstract class Vehicle {
     @Override
     public String toString() {
         return  "id='" + id + '\'' +
-                "model='" + model + '\'' +
+                "model='" + manufacturer + '\'' +
                 ", type='" + type + '\'' +
-                ", variant='" + variant + '\'' +
+                ", variant='" + modelName + '\'' +
+                ", variant='" + nickName + '\'' +
                 ", power='" + power + '\'' +
                 ", weight='" + weight + '\'' +
                 ", services=" + services +
