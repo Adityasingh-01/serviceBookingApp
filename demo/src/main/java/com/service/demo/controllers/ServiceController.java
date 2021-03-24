@@ -232,44 +232,62 @@ public class ServiceController {
 
     @GetMapping("/handleAddBike")
     public String handleAddBike(Model model, HttpServletRequest request) {
-        model.addAttribute("message", "message");
-        model.addAttribute("tasks", "tasks");
-
-        String bikeModel = request.getParameter("model");
-        String variant = request.getParameter("variant");
-        String type = request.getParameter("type");
-        String power = request.getParameter("power");
-        String weight = request.getParameter("weight");
-        String serviceNo = request.getParameter("serviceNo");
-        int serviceNoInt = Integer.parseInt(serviceNo);
-        String registrationNo = request.getParameter("registrationNo");
-        int registrationNoInt = Integer.parseInt(registrationNo);
-        String insurance = request.getParameter("insurance");
-        boolean isInsurance = Boolean.parseBoolean(insurance);
-        String superBike = request.getParameter("type");
-        String suspension = request.getParameter("suspension");
-        String braking = request.getParameter("braking");
-
-        Bike bike = new Bike();
-
-
-        if (registrationNo != null) {
-
-            bike.setModel(bikeModel);
-            bike.setVariant(variant);
-            bike.setType(type);
-            bike.setPower(power);
-            bike.setWeight(weight);
-            bike.setServices(serviceNoInt);
-            bike.setRegistrationNo(registrationNoInt);
-            bike.setInsurance(isInsurance);
-            bike.setType(superBike);
-            bike.setSuspension(suspension);
-            bike.setBraking(braking);
-            return "thank you";
-        } else {
-            return "fillAgain";
+        String email=readCookie("bs_email", request);
+        if(StringUtils.isEmpty(email)) {
+            model.addAttribute("message", "message");
+            model.addAttribute("tasks", "tasks");
         }
+        else {
+            Customer customer = getCustomerByEmail(email);
+            if (customer != null) {
+
+                String bikeModel = request.getParameter("model");
+                String variant = request.getParameter("variant");
+                String type = request.getParameter("type");
+                String power = request.getParameter("power");
+                String weight = request.getParameter("weight");
+                String serviceNo = request.getParameter("serviceNo");
+                int serviceNoInt = Integer.parseInt(serviceNo);
+                String registrationNo = request.getParameter("registrationNo");
+                int registrationNoInt = Integer.parseInt(registrationNo);
+                String insurance = request.getParameter("insurance");
+                boolean isInsurance = Boolean.parseBoolean(insurance);
+                String superBike = request.getParameter("type");
+                String suspension = request.getParameter("suspension");
+                String braking = request.getParameter("braking");
+
+
+                if (registrationNo != null) {
+                    Bike bike = new Bike();
+                    bike.setModel(bikeModel);
+                    bike.setVariant(variant);
+                    bike.setType(type);
+                    bike.setPower(power);
+                    bike.setWeight(weight);
+                    bike.setServices(serviceNoInt);
+                    bike.setRegistrationNo(registrationNoInt);
+                    bike.setInsurance(isInsurance);
+                    bike.setType(superBike);
+                    bike.setSuspension(suspension);
+                    bike.setBraking(braking);
+                    List<Bike> bikes = customer.getBikes();
+                    if (bikes == null) {
+                        bikes = new ArrayList<>();
+                        bikes.add(bike);
+                        customer.setBikes(bikes);
+                        vehicleRepository.save(bike);
+                        customerRepository.save(customer);
+                    }
+                }
+            }
+            else {
+                model.addAttribute("errorCode", "01");
+                model.addAttribute("errorMessage", "You need to login or register");
+            }
+        }
+
+
+        return "welcome";
     }
 
     private void addCookieToResponse(String name, String value, HttpServletResponse response) {
