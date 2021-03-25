@@ -5,6 +5,7 @@ import com.service.demo.repositories.VehicleRepository;
 import com.service.demo.vo.Bike;
 import com.service.demo.vo.Car;
 import com.service.demo.vo.Customer;
+import com.service.demo.vo.Vehicle;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -264,15 +265,19 @@ public class ServiceController {
             if (customer != null) {
                 model.addAttribute("customer", customer);
                 boolean vehicleFound = false;
+                List<Vehicle> vehicles = new ArrayList<>();
                 if(customer.getCars() != null && !customer.getCars().isEmpty()) {
                     vehicleFound = true;
+                    vehicles.addAll(customer.getCars());
                 }
                 if(customer.getBikes() != null && !customer.getBikes().isEmpty()) {
                     vehicleFound = true;
+                    vehicles.addAll(customer.getBikes());
                 }
                 if(!vehicleFound) {
                     model.addAttribute("noVehicle", "true");
                 }
+                model.addAttribute("vehicles", vehicles);
             } else {
                 model.addAttribute("errorCode", "01");
                 model.addAttribute("errorMessage", "You need to login or register");
@@ -291,7 +296,7 @@ public class ServiceController {
         } else {
             Customer customer = getCustomerByEmail(email);
             if (customer != null) {
-                
+
             }
         }
         return "bookService";

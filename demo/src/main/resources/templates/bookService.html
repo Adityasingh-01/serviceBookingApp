@@ -85,36 +85,36 @@
                     <h3 style="color:#f36b2a">Here are your Vehicles</h3>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="full" style="color:#f36b2c">
                     <div class="contact_form">
                         <form name="carForm" th:action="@{/fetchTimeSlots}">
                             <table border="1" width="800">
                                 <tr>
-                                    <td style="text-align: center; vertical-align: middle;">Select a Car</td>
+                                    <td style="text-align: center; vertical-align: middle;">Select a Vehicle</td>
                                     <td style="text-align: center; vertical-align: middle;">
                                         <select name="carId" >
                                             <option value=""> -- </option>
-                                            <option th:each="car : ${customer.cars}"
-                                                    th:value="${car.id}"
-                                                    th:utext="${car.nickName}"/>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: center; vertical-align: middle;">Select a Bike</td>
-                                    <td style="text-align: center; vertical-align: middle;">
-                                        <select>
-                                            <option value=""> -- </option>
-                                            <option th:each="bike : ${customer.bikes}"
-                                                    th:value="${bike.id}"
-                                                    th:utext="${bike.nickName}"/>
+                                            <option th:each="vehicle : ${vehicles}"
+                                                    th:value="${vehicle.id}"
+                                                    th:utext="${vehicle.nickName}"/>
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: center; vertical-align: middle;">
-                                        <input name="submit" type="submit" value="Choose a Time SLot" />
+                                        Select Date
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <input name="serviceDate" id="serviceDate" type="date"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        Fetch Time Slots
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <input name="submit" type="submit" value="Select Time Slots" />
                                     </td>
                                 </tr>
                             </table>
