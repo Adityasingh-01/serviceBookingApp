@@ -88,7 +88,14 @@ public class ServiceController {
             Customer customer = new Customer(firstName, lastName, null, null, address, email, phoneNumberStr, null);
             customer.setPassword(password);
             model.addAttribute("customer", customer);
-            if(customer.getCars() == null || customer.getCars().isEmpty()) {
+            boolean vehicleFound = false;
+            if(customer.getCars() != null && !customer.getCars().isEmpty()) {
+                vehicleFound = true;
+            }
+            if(customer.getBikes() != null && !customer.getBikes().isEmpty()) {
+                vehicleFound = true;
+            }
+            if(!vehicleFound) {
                 model.addAttribute("noVehicle", "true");
             }
             customerRepository.save(customer);
@@ -114,7 +121,16 @@ public class ServiceController {
                 model.addAttribute("noVehicle", "true");
             } else if(customer.getPassword().equals(password)) {
                 model.addAttribute("customer", customer);
-                if(customer.getCars() == null || customer.getCars().isEmpty()) {
+                Car carSelected = new Car();
+                model.addAttribute("carSelected", carSelected);
+                boolean vehicleFound = false;
+                if(customer.getCars() != null && !customer.getCars().isEmpty()) {
+                    vehicleFound = true;
+                }
+                if(customer.getBikes() != null && !customer.getBikes().isEmpty()) {
+                    vehicleFound = true;
+                }
+                if(!vehicleFound) {
                     model.addAttribute("noVehicle", "true");
                 }
             } else {
@@ -140,7 +156,14 @@ public class ServiceController {
                 model.addAttribute("errorCode", "01");
             } else {
                 model.addAttribute("customer", customer);
-                if(customer.getCars() == null || customer.getCars().isEmpty()) {
+                boolean vehicleFound = false;
+                if(customer.getCars() != null && !customer.getCars().isEmpty()) {
+                    vehicleFound = true;
+                }
+                if(customer.getBikes() != null && !customer.getBikes().isEmpty()) {
+                    vehicleFound = true;
+                }
+                if(!vehicleFound) {
                     model.addAttribute("noVehicle", "true");
                 }
             }
@@ -230,6 +253,50 @@ public class ServiceController {
         return "welcome";
     }
 
+    @GetMapping("/bookService")
+    public String bookService(Model model, HttpServletRequest request) {
+        String email = readCookie("bs_email", request);
+        if (StringUtils.isEmpty(email)) {
+            model.addAttribute("errorCode", "01");
+            model.addAttribute("errorMessage", "You need to login or register");
+        } else {
+            Customer customer = getCustomerByEmail(email);
+            if (customer != null) {
+                model.addAttribute("customer", customer);
+                boolean vehicleFound = false;
+                if(customer.getCars() != null && !customer.getCars().isEmpty()) {
+                    vehicleFound = true;
+                }
+                if(customer.getBikes() != null && !customer.getBikes().isEmpty()) {
+                    vehicleFound = true;
+                }
+                if(!vehicleFound) {
+                    model.addAttribute("noVehicle", "true");
+                }
+            } else {
+                model.addAttribute("errorCode", "01");
+                model.addAttribute("errorMessage", "You need to login or register");
+            }
+        }
+        return "bookService";
+    }
+
+    @GetMapping("/fetchTimeSlots")
+    public String fetchTimeSlots(Model model, HttpServletRequest request) {
+        String carId = request.getParameter("carId");
+        String email = readCookie("bs_email", request);
+        if (StringUtils.isEmpty(email)) {
+            model.addAttribute("errorCode", "01");
+            model.addAttribute("errorMessage", "You need to login or register");
+        } else {
+            Customer customer = getCustomerByEmail(email);
+            if (customer != null) {
+                
+            }
+        }
+        return "bookService";
+    }
+
     @GetMapping("/handleAddBike")
     public String handleAddBike(Model model, HttpServletRequest request) {
         String email=readCookie("bs_email", request);
@@ -255,6 +322,7 @@ public class ServiceController {
                     bike.setManufacturer(manufacturer);
                     bike.setInsurance(isInsurance);
                     bike.setOwner(customer);
+                    bike.setRegistrationNo(registrationNo);
                     List<Bike> bikes = customer.getBikes();
                     if (bikes == null) {
                         bikes = new ArrayList<>();

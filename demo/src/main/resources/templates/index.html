@@ -66,7 +66,7 @@
                     <a href="/addBike">Add Bike</a>
                 </li>
                 <li th:unless="${errorCode == '01'}">
-                    <a href="/bookService">Book A Service</a>
+                    <a href="/welcome">Book A Service</a>
                 </li>
                 <li th:unless="${errorCode == '01'}">
                     <a href="/logOut">Log Out</a>
@@ -124,7 +124,7 @@
                      <h3>AVALON</h3>
                      <p>A one stop shop for all your vehicle servicing needs.</p>
                      <div class="button_section">
-                        <a th:unless=${errorCode=='01'} href="/bookAService">Book Now</a>
+                        <a th:unless=${errorCode=='01'} href="/welcome">Book Now</a>
                          <a th:unless=${errorCode=='01'} href="/logOut">Log Out</a>
                         <a th:if=${errorCode=='01'} href="/login">Login</a>
                          <a th:if=${errorCode=='01'} href="/register">Register</a>
