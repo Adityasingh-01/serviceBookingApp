@@ -264,6 +264,9 @@ public class ServiceController {
             Customer customer = getCustomerByEmail(email);
             if (customer != null) {
                 model.addAttribute("customer", customer);
+
+
+
                 boolean vehicleFound = false;
                 List<Vehicle> vehicles = new ArrayList<>();
                 if(customer.getCars() != null && !customer.getCars().isEmpty()) {
