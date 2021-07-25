@@ -111,7 +111,7 @@ public class ServiceController {
     }
 
     @GetMapping("/handleLogin")
-    public String handleLogin(Model model, HttpServletRequest request) {
+    public String handleLogin(Model model, HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         if(!StringUtils.isEmpty(email) && !StringUtils.isEmpty(password)) {
@@ -134,6 +134,7 @@ public class ServiceController {
                 if(!vehicleFound) {
                     model.addAttribute("noVehicle", "true");
                 }
+                addCookieToResponse("bs_email", email, response);
             } else {
 
             }
@@ -360,8 +361,8 @@ public class ServiceController {
         response.addCookie(cookie);
     }
 
-    private String readCookie(String name, HttpServletRequest request) {
-        Cookie cookie = WebUtils.getCookie(request, name);
+    private String readCookie(String cookieName, HttpServletRequest httpRequest) {
+        Cookie cookie = WebUtils.getCookie(httpRequest, cookieName);
         if(cookie != null && !StringUtils.isEmpty(cookie.getValue())) {
             return cookie.getValue();
         } else {
