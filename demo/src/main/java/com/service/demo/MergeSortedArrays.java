@@ -4,19 +4,19 @@ public class MergeSortedArrays {
 
     public static void main(String args[]) {
 
-        int[] inputArrayUnsorted = {23, 45, 65, 90, 101,24, 25, 34, 67, 89};
-
-        int[] finalArray = sort(inputArrayUnsorted);
+        int[] inputArrayUnsorted = {23, 101, 65, 33, 106,23, 23, 10001, 67, 89};
+        int[] finalArray = new int[inputArrayUnsorted.length];
+        finalArray = sort(inputArrayUnsorted, finalArray);
 
         for(int i = 0; i<finalArray.length; i++) {
             System.out.print(finalArray[i] + " ,");
         }
     }
 
-    public static int[] sort(int[] inputArray) {
+    public static int[] sort(int[] inputArray, int[] finalArray) {
         int beg = 0;
         int end = inputArray.length - 1;
-        int[] finalArray = new int[inputArray.length];
+
         if (beg<end) {
             int mid = (beg+end)/2;
             int leftArrayLength = mid - beg + 1;
@@ -29,9 +29,11 @@ public class MergeSortedArrays {
             for (int j=0; j<rightArrayLength; ++j) {
                 rightArray[j] = inputArray[mid + 1+ j];
             }
-            sort(leftArray);
-            sort(rightArray);
+            leftArray = sort(leftArray, finalArray);
+            rightArray = sort(rightArray, finalArray);
             finalArray = mergeAndSort(leftArray, rightArray);
+        } else {
+            finalArray = inputArray;
         }
         return finalArray;
     }
